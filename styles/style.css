@@ -1,6 +1,8 @@
 body {
-  text-align: center;
+    text-align: center;
 }
+
+
 /* 
 .game-instructions {
 }
@@ -18,11 +20,11 @@ body button {
 } */
 
 #game-board {
-  padding: 20px;
+    padding: 20px;
 }
 
 #canvas {
-  border: 1px solid black;
-  background-image: url(../images/parkingLot2.PNG);
-  background-size: cover;
+    border: 1px solid black;
+    background-image: url(../images/parkingLot2.PNG);
+    background-size: cover;
 }

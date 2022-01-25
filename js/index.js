@@ -22,7 +22,6 @@ class Player {
         this.w = 120;
         this.h = 60;
         this.angle = 0;
-        this.image = "../images/racecar.png";
     }
 
     move(direction) {
@@ -70,24 +69,30 @@ class Player {
     }
 }
 
+const cat1 = new Image();
+cat1.src = "../images/cat1.png";
+const cat2 = new Image();
+cat2.src = "../images/cat2.png";
+const cat3 = new Image();
+cat3.src = "../images/cat3.png";
+const cat4 = new Image();
+cat4.src = "../images/cat4.png";
+
+let imageArr = [cat1, cat2, cat3, cat4];
+
+function randomImage(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
 class Item {
     constructor(id) {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.w = 20;
-        this.h = 20;
+        this.w = 35;
+        this.h = 40;
         this.points = 5;
         this.id = id;
-        this.image = randomImage();
-        this.imageArr = [
-            "../images/cat1.png",
-            "../images/cat2.png",
-            "../images/cat3.png",
-            "../images/cat4.png",
-        ];
-    }
-    randomImage() {
-        this.imageArr[Math.floor(Math.random() * this.imageArr.length)];
+        this.image = randomImage(imageArr);
     }
 }
 
@@ -205,7 +210,7 @@ const detectWalls = (player) => {
         player.driftY = 0;
     }
     if (player.y > canvas.height - player.h - 10) {
-        player.driftX = 0;
+        player.driftX = 00;
         player.driftY = 0;
     }
 };
