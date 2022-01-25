@@ -1,0 +1,28 @@
+body {
+  text-align: center;
+}
+/* 
+.game-instructions {
+}
+
+.game-instructions p {
+}
+
+.game-title {
+}
+
+.key-controls {
+}
+
+body button {
+} */
+
+#game-board {
+  padding: 20px;
+}
+
+#canvas {
+  border: 1px solid black;
+  background-image: url(../images/parkingLot2.PNG);
+  background-size: cover;
+}
