@@ -95,20 +95,7 @@ function addItem() {
   itemArr.push(new Item(1));
 }
 
-const itemInterval = setInterval(addItem, 7000);
-
 let score = 0;
-
-function detectCollision(player, obj) {
-  if (
-    player.x < obj.x + obj.w &&
-    player.x + player.w > obj.x &&
-    player.y < obj.y + obj.h &&
-    player.y + player.h > obj.y
-  ) {
-    score += obj.points;
-  }
-}
 
 let time = 30;
 function timer() {
@@ -117,7 +104,9 @@ function timer() {
 }
 
 const driver = new Player();
-
+//
+// ENGINE
+//
 function startGame() {
   setInterval(timer, 1000);
   document.addEventListener("keydown", function (e) {
@@ -136,6 +125,7 @@ function startGame() {
         break;
     }
   });
+  const itemInterval = setInterval(addItem, 1500);
 
   animate();
 }
@@ -146,12 +136,52 @@ const animate = () => {
   driver.x += driver.driftX;
   driver.y += driver.driftY;
   ctx.drawImage(img, driver.x, driver.y, driver.w, driver.h);
-  ctx.fillStyle = "black";
-  ctx.font = "20px Arial";
-  ctx.fillText("Time:" + time, 20, 20);
+  ctx.fillStyle = "white";
+  ctx.font = "24px Arial";
+  ctx.fillText("Time:" + time, 15, 20);
+  ctx.fillText("Score:" + score, 15, 45);
   detectWalls(driver);
+
+  for (let i = 0; i < itemArr.length; i++) {
+    const item = itemArr[i];
+    console;
+    ctx.fillStyle = "black";
+    ctx.fillRect(item.x, item.y, item.w, item.h);
+    detectCollision(driver, item);
+  }
+
+  function detectCollision(player, obj) {
+    if (
+      player.x < obj.x + obj.w &&
+      player.x + player.w > obj.x &&
+      player.y < obj.y + obj.h &&
+      player.y + player.h > obj.y
+    ) {
+      score += obj.points;
+      return true;
+    } else {
+      return false;
+    }
+  }
+  if (time === 0) {
+    gameOver();
+  }
   window.requestAnimationFrame(animate);
 };
+//
+// GAME OVER
+//
+function gameOver() {
+  obstArr = [];
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "red";
+  ctx.font = 50;
+  ctx.fillText("GAME OVER", canvas.width / 2 - 80, canvas.height / 2 - 30);
+  ctx.fillText("Score:" + score, canvas.width / 2 - 80, canvas.height / 2);
+
+  window.cancelAnimationFrame(engine);
+}
 
 const detectWalls = (player) => {
   if (player.x < 10) {
