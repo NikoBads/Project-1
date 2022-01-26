@@ -1,76 +1,29 @@
+import Player from "./player.js";
+let engine;
+let timeInterval;
+let itemInterval;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 canvas.height = 600;
 canvas.width = 900;
 
+let driver;
+
 window.onload = () => {
     document.getElementById("start-button").onclick = () => {
         startGame();
+        document.getElementById("start-button").style.visibility = "hidden";
     };
 };
+
+let gameStart = false;
 
 const img = new Image();
 img.src = "../images/ufo.png";
 
 const bgimg = new Image();
 bgimg.src = "../images/AlienCats.png";
-
-class Player {
-    constructor() {
-        this.x = canvas.width / 2 - 50;
-        this.y = canvas.height / 2 - 50;
-        this.driftX = 0;
-        this.driftY = 0;
-        this.w = 120;
-        this.h = 60;
-        this.angle = 0;
-    }
-
-    move(direction) {
-        switch (direction) {
-            case "left":
-                if (this.x <= 6) {
-                    this.x = 6;
-                    this.driftX = 0;
-                    this.driftY = 0;
-                } else {
-                    this.x -= 20;
-                    this.driftX = -1;
-                }
-                break;
-            case "right":
-                if (this.x + this.w >= canvas.width - 6) {
-                    this.x = canvas.width - 6 - this.w;
-                    this.driftX = 0;
-                    this.driftY = 0;
-                } else {
-                    this.x += 20;
-                    this.driftX = 1;
-                }
-                break;
-            case "up":
-                if (this.y <= 6) {
-                    this.y = 6;
-                    this.driftX = 0;
-                    this.driftY = 0;
-                } else {
-                    this.y -= 20;
-                    this.driftY = -1;
-                }
-                break;
-            case "down":
-                if (this.y + this.h >= canvas.height - 6) {
-                    this.y = canvas.height - 6 - this.h;
-                    this.driftX = 0;
-                    this.driftY = 0;
-                } else {
-                    this.y += 20;
-                    this.driftY = 1;
-                }
-        }
-    }
-}
 
 const cat1 = new Image();
 cat1.src = "../images/cat1.png";
@@ -102,6 +55,8 @@ class Item {
 let itemArr = [];
 
 function addItem() {
+    // itemSpawnRate = Math.random() * (2000 - 500) + 500;
+    // itemSpawnRate += 500;
     itemArr.push(new Item(1));
 }
 
@@ -110,40 +65,63 @@ let score = 0;
 let time = 30;
 
 function timer() {
-    time -= 1;
-    console.log(time);
+    --time;
+    if (time < 0) {
+        time = 30;
+    }
 }
 
-const driver = new Player();
+let oneSecond = 1000;
+
 //
 // ENGINE
 //
-function startGame() {
-    setInterval(timer, 1000);
-    document.addEventListener("keydown", function(e) {
-        switch (e.code) {
-            case "ArrowLeft":
-                driver.move("left");
-                break;
-            case "ArrowRight":
-                driver.move("right");
-                break;
-            case "ArrowUp":
-                driver.move("up");
-                break;
-            case "ArrowDown":
-                driver.move("down");
-                break;
-        }
-    });
-    const itemInterval = setInterval(addItem, Math.random() * 2000);
 
-    animate();
+document.addEventListener("keydown", function(e) {
+    e.preventDefault();
+    switch (e.code) {
+        case "ArrowLeft":
+            driver.move("left");
+            break;
+        case "ArrowRight":
+            driver.move("right");
+            break;
+        case "ArrowUp":
+            driver.move("up");
+            break;
+        case "ArrowDown":
+            driver.move("down");
+            break;
+    }
+});
+
+// let itemSpawnRate = Math.random() * (2000 - 500) + 500;
+
+function startGame() {
+    if (!gameStart) {
+        time = 30;
+        driver = new Player(canvas.width, canvas.height);
+        score = 0;
+        itemArr = [];
+        timeInterval = setInterval(timer, oneSecond);
+
+        // itemInterval = setInterval(addItem, itemSpawnRate);
+        gameStart = true;
+        animate();
+    }
 }
 
-const animate = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+let spawn = 60;
 
+const animate = () => {
+    engine = window.requestAnimationFrame(animate);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let guess = Math.floor(Math.random() * 120);
+    // console.log(guess);
+    if (guess === spawn) {
+        addItem();
+    }
     driver.x += driver.driftX;
     driver.y += driver.driftY;
     ctx.drawImage(img, driver.x, driver.y, driver.w, driver.h);
@@ -155,20 +133,18 @@ const animate = () => {
 
     for (let i = 0; i < itemArr.length; i++) {
         const item = itemArr[i];
-        console;
+
         ctx.fillStyle = "black";
         ctx.drawImage(item.image, item.x, item.y, item.w, item.h);
         detectCollision(driver, item);
-        didCollide = detectCollision(driver, itemArr[i]);
+        let didCollide = detectCollision(driver, itemArr[i]);
         if (didCollide) {
             itemArr.splice(i, 1);
         }
     }
-
     if (time === 0) {
         gameOver();
     }
-    window.requestAnimationFrame(animate);
 };
 
 function detectCollision(player, obj) {
@@ -187,7 +163,8 @@ function detectCollision(player, obj) {
 // GAME OVER
 //
 function gameOver() {
-    obstArr = [];
+    itemArr = [];
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
     ctx.drawImage(bgimg, 0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#21ff00";
@@ -198,8 +175,12 @@ function gameOver() {
         canvas.width / 2 - 75,
         canvas.height / 2 - 170
     );
-
+    document.getElementById("start-button").style.visibility = "visible";
+    gameStart = false;
+    clearInterval(itemInterval);
+    clearInterval(timeInterval);
     window.cancelAnimationFrame(engine);
+    score = 0;
 }
 
 const detectWalls = (player) => {
@@ -217,7 +198,7 @@ const detectWalls = (player) => {
         player.driftY = 0;
     }
     if (player.y > canvas.height - player.h - 6) {
-        player.driftX = 00;
+        player.driftX = 0;
         player.driftY = 0;
     }
 };
