@@ -1,27 +1,45 @@
 body {
     text-align: center;
+    background-image: url("../images/wallpaper.jpg");
+    background-position: center;
+    background-size: fill;
     background-color: rgb(204, 204, 204);
+    font-family: monospace
 }
 
-
-/* 
 .game-instructions {
-}
-
-.game-instructions p {
+    font-size: 20px;
+    margin: 0;
+    color: limegreen;
+    font-weight: bolder;
+    margin: 0px;
+    padding: 0px;
 }
 
 .game-title {
+    height: 125px;
+    align-items: center;
+    padding: 20px;
 }
 
 .key-controls {
+    height: 60px;
 }
 
 body button {
-} */
+    font-size: 20px;
+    font-family: monospace;
+    background-color: rgb(51, 191, 4);
+    color: blueviolet;
+    padding: 10px 30px;
+    border: 5;
+    border-radius: 10px;
+    margin: 5px;
+    font-weight: bolder;
+}
 
 #game-board {
-    padding: 20px;
+    padding: 10px;
 }
 
 #canvas {

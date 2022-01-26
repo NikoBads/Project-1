@@ -13,6 +13,9 @@ window.onload = () => {
 const img = new Image();
 img.src = "../images/ufo.png";
 
+const bgimg = new Image();
+bgimg.src = "../images/AlienCats.png";
+
 class Player {
     constructor() {
         this.x = canvas.width / 2 - 50;
@@ -27,43 +30,43 @@ class Player {
     move(direction) {
         switch (direction) {
             case "left":
-                if (this.x <= 10) {
-                    this.x = 10;
+                if (this.x <= 6) {
+                    this.x = 6;
                     this.driftX = 0;
                     this.driftY = 0;
                 } else {
-                    this.x -= 15;
-                    this.driftX = -0.6;
+                    this.x -= 20;
+                    this.driftX = -1;
                 }
                 break;
             case "right":
-                if (this.x + this.w >= canvas.width - 10) {
-                    this.x = canvas.width - 10 - this.w;
+                if (this.x + this.w >= canvas.width - 6) {
+                    this.x = canvas.width - 6 - this.w;
                     this.driftX = 0;
                     this.driftY = 0;
                 } else {
-                    this.x += 15;
-                    this.driftX = 0.6;
+                    this.x += 20;
+                    this.driftX = 1;
                 }
                 break;
             case "up":
-                if (this.y <= 10) {
-                    this.y = 10;
+                if (this.y <= 6) {
+                    this.y = 6;
                     this.driftX = 0;
                     this.driftY = 0;
                 } else {
-                    this.y -= 15;
-                    this.driftY = -0.6;
+                    this.y -= 20;
+                    this.driftY = -1;
                 }
                 break;
             case "down":
-                if (this.y + this.h >= canvas.height - 10) {
-                    this.y = canvas.height - 10 - this.h;
+                if (this.y + this.h >= canvas.height - 6) {
+                    this.y = canvas.height - 6 - this.h;
                     this.driftX = 0;
                     this.driftY = 0;
                 } else {
-                    this.y += 15;
-                    this.driftY = 0.6;
+                    this.y += 20;
+                    this.driftY = 1;
                 }
         }
     }
@@ -133,7 +136,7 @@ function startGame() {
                 break;
         }
     });
-    const itemInterval = setInterval(addItem, 1500);
+    const itemInterval = setInterval(addItem, Math.random() * 2000);
 
     animate();
 }
@@ -144,7 +147,7 @@ const animate = () => {
     driver.x += driver.driftX;
     driver.y += driver.driftY;
     ctx.drawImage(img, driver.x, driver.y, driver.w, driver.h);
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#21ff00";
     ctx.font = "24px Arial";
     ctx.fillText("Time:" + time, 15, 20);
     ctx.fillText("Score:" + score, 15, 45);
@@ -186,30 +189,34 @@ function detectCollision(player, obj) {
 function gameOver() {
     obstArr = [];
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "red";
-    ctx.font = 50;
-    ctx.fillText("GAME OVER", canvas.width / 2 - 80, canvas.height / 2 - 30);
-    ctx.fillText("Score:" + score, canvas.width / 2 - 80, canvas.height / 2);
+    ctx.drawImage(bgimg, 0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#21ff00";
+    ctx.font = "bold 40px fantasy";
+    ctx.fillText("GAME OVER", canvas.width / 2 - 110, canvas.height / 2 - 210);
+    ctx.fillText(
+        "Score:" + score,
+        canvas.width / 2 - 75,
+        canvas.height / 2 - 170
+    );
 
     window.cancelAnimationFrame(engine);
 }
 
 const detectWalls = (player) => {
-    if (player.x < 10) {
+    if (player.x < 6) {
         player.x = 11;
         player.driftX = 0;
         player.driftY = 0;
     }
-    if (player.x + player.w > canvas.width - 10) {
+    if (player.x + player.w > canvas.width - 6) {
         player.driftX = 0;
         player.driftY = 0;
     }
-    if (player.y < 10) {
+    if (player.y < 6) {
         player.driftX = 0;
         player.driftY = 0;
     }
-    if (player.y > canvas.height - player.h - 10) {
+    if (player.y > canvas.height - player.h - 6) {
         player.driftX = 00;
         player.driftY = 0;
     }
