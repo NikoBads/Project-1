@@ -196,7 +196,8 @@ function gameOver() {
     itemArr = [];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
-    ctx.drawImage(bgimg, 0, 0, canvas.width, canvas.height);
+    // ctx.drawImage(bgimg, 0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#21ff00";
     ctx.font = "bold 40px fantasy";
     ctx.fillText("GAME OVER", canvas.width / 2 - 110, canvas.height / 2 - 210);
