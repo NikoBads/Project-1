@@ -18,22 +18,22 @@ window.onload = () => {
 };
 
 const meow1 = new Audio();
-meow1.src = "../sounds/meow1";
+meow1.src = "./sounds/meow1";
 
 const meow2 = new Audio();
-meow2.src = "../sounds/meow2";
+meow2.src = "./sounds/meow2";
 
 const meow3 = new Audio();
-meow3.src = "../sounds/meow3";
+meow3.src = "./sounds/meow3";
 
 const meow4 = new Audio();
-meow4.src = "../sounds/meow4";
+meow4.src = "./sounds/meow4";
 
 const meow5 = new Audio();
-meow5.src = "../sounds/meow5";
+meow5.src = "./sounds/meow5";
 
 const meow6 = new Audio();
-meow6.src = "../sounds/meow6";
+meow6.src = "./sounds/meow6";
 
 let meowArr = [meow1, meow2, meow3, meow4, meow5, meow6];
 
@@ -44,26 +44,26 @@ if (audio.canPlayType("audio/mp3")) {
 }
 
 function playAudio(meowsound) {
-    var audio = new Audio("../sounds/meow5" + audioType);
+    var audio = new Audio("./sounds/meow5" + audioType);
     audio.play();
 }
 
 let gameStart = false;
 
 const img = new Image();
-img.src = "../images/ufo.png";
+img.src = "./images/ufo.png";
 
 const bgimg = new Image();
-bgimg.src = "../images/AlienCats.png";
+bgimg.src = "./images/AlienCats.png";
 
 const cat1 = new Image();
-cat1.src = "../images/cat1.png";
+cat1.src = "./images/cat1.png";
 const cat2 = new Image();
-cat2.src = "../images/cat2.png";
+cat2.src = "./images/cat2.png";
 const cat3 = new Image();
-cat3.src = "../images/cat3.png";
+cat3.src = "./images/cat3.png";
 const cat4 = new Image();
-cat4.src = "../images/cat4.png";
+cat4.src = "./images/cat4.png";
 
 let imageArr = [cat1, cat2, cat3, cat4];
 
