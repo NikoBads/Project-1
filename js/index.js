@@ -17,6 +17,37 @@ window.onload = () => {
     };
 };
 
+const meow1 = new Audio();
+meow1.src = "../sounds/meow1";
+
+const meow2 = new Audio();
+meow2.src = "../sounds/meow2";
+
+const meow3 = new Audio();
+meow3.src = "../sounds/meow3";
+
+const meow4 = new Audio();
+meow4.src = "../sounds/meow4";
+
+const meow5 = new Audio();
+meow5.src = "../sounds/meow5";
+
+const meow6 = new Audio();
+meow6.src = "../sounds/meow6";
+
+let meowArr = [meow1, meow2, meow3, meow4, meow5, meow6];
+
+var audioType;
+var audio = new Audio();
+if (audio.canPlayType("audio/mp3")) {
+    audioType = ".mp3";
+}
+
+function playAudio(meowsound) {
+    var audio = new Audio("../sounds/meow5" + audioType);
+    audio.play();
+}
+
 let gameStart = false;
 
 const img = new Image();
@@ -36,28 +67,26 @@ cat4.src = "../images/cat4.png";
 
 let imageArr = [cat1, cat2, cat3, cat4];
 
-function randomImage(arr) {
+function randomElement(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
 class Item {
-    constructor(id) {
+    constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.w = 35;
         this.h = 40;
         this.points = 5;
-        this.id = id;
-        this.image = randomImage(imageArr);
+        this.image = randomElement(imageArr);
+        this.sound = randomElement(meowArr);
     }
 }
 
 let itemArr = [];
 
 function addItem() {
-    // itemSpawnRate = Math.random() * (2000 - 500) + 500;
-    // itemSpawnRate += 500;
-    itemArr.push(new Item(1));
+    itemArr.push(new Item());
 }
 
 let score = 0;
@@ -95,8 +124,6 @@ document.addEventListener("keydown", function(e) {
     }
 });
 
-// let itemSpawnRate = Math.random() * (2000 - 500) + 500;
-
 function startGame() {
     if (!gameStart) {
         time = 30;
@@ -104,8 +131,6 @@ function startGame() {
         score = 0;
         itemArr = [];
         timeInterval = setInterval(timer, oneSecond);
-
-        // itemInterval = setInterval(addItem, itemSpawnRate);
         gameStart = true;
         animate();
     }
@@ -140,6 +165,7 @@ const animate = () => {
         let didCollide = detectCollision(driver, itemArr[i]);
         if (didCollide) {
             itemArr.splice(i, 1);
+            playAudio();
         }
     }
     if (time === 0) {

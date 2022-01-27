@@ -4,7 +4,8 @@ body {
     background-position: center;
     background-size: fill;
     background-color: rgb(204, 204, 204);
-    font-family: monospace
+    font-family: monospace;
+    margin: 0pt;
 }
 
 .game-instructions {
@@ -40,6 +41,10 @@ body button {
 
 #game-board {
     padding: 10px;
+}
+
+.ver {
+    color: black;
 }
 
 #canvas {
