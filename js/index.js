@@ -52,18 +52,24 @@ let gameStart = false;
 
 const img = new Image();
 img.src = "images/ufo.png";
+img.onload = () => {};
 
 const bgimg = new Image();
 bgimg.src = "images/AlienCats.png";
+bgimg.onload = () => {};
 
 const cat1 = new Image();
 cat1.src = "images/cat1.png";
+cat1.onload = () => {};
 const cat2 = new Image();
 cat2.src = "images/cat2.png";
+cat2.onload = () => {};
 const cat3 = new Image();
 cat3.src = "images/cat3.png";
+cat3.onload = () => {};
 const cat4 = new Image();
 cat4.src = "images/cat4.png";
+cat4.onload = () => {};
 
 let imageArr = [cat1, cat2, cat3, cat4];
 
