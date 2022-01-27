@@ -1,4 +1,4 @@
-import Player from "./player.js";
+// import Player from "../player.js";
 let engine;
 let timeInterval;
 let itemInterval;
@@ -18,34 +18,32 @@ window.onload = () => {
 };
 
 const meow1 = new Audio();
-meow1.src = "sounds/meow1";
+meow1.src = "sounds/meow1.mp3";
 
 const meow2 = new Audio();
-meow2.src = "sounds/meow2";
+meow2.src = "sounds/meow2.mp3";
 
 const meow3 = new Audio();
-meow3.src = "sounds/meow3";
+meow3.src = "sounds/meow3.mp3";
 
 const meow4 = new Audio();
-meow4.src = "sounds/meow4";
+meow4.src = "sounds/meow4.mp3";
 
 const meow5 = new Audio();
-meow5.src = "sounds/meow5";
+meow5.src = "sounds/meow5.mp3";
 
 const meow6 = new Audio();
-meow6.src = "sounds/meow6";
+meow6.src = "sounds/meow6.mp3";
 
 let meowArr = [meow1, meow2, meow3, meow4, meow5, meow6];
 
 var audioType;
 var audio = new Audio();
-if (audio.canPlayType("audio/mp3")) {
-    audioType = ".mp3";
-}
+audio = meow4;
 
-function playAudio(meowsound) {
-    var audio = new Audio("sounds/meow5" + audioType);
-    audio.play();
+function playAudio() {
+    let randomMeow = randomElement(meowArr);
+    randomMeow.play();
 }
 
 let gameStart = false;

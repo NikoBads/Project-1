@@ -1,4 +1,4 @@
-export default class Player {
+class Player {
     constructor(width, height) {
         this.canvaswidth = width;
         this.canvasheight = height;
